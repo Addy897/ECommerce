@@ -34,15 +34,13 @@ class Product(models.Model):
 
 class EUsers(models.Model):
     email=models.EmailField(unique=True)
-    fname=models.CharField(max_length=24)
-    lname=models.CharField(max_length=24)
+    name=models.CharField(max_length=24)
     password=models.CharField(max_length=100)
     pfPhoto=models.ImageField(upload_to="images")
-    phone=models.IntegerField(unique=True)
 
     def __str__(self) -> str:
-        display:str=self.fname+"\t"+self.lname+"\t"+str(self.phone)+"\t"+self.pfPhoto.name
+        display:str=self.name
         return display
     def toJson(self) -> dict:
-        return {"user":{"fname": self.fname,"lname": self.lname,"phone":self.phone,"email":self.email,"pfPhoto":self.pfPhoto.name}}
+        return {"user":{"name": self.name,"email":self.email,"pfPhoto":self.pfPhoto.name}}
     

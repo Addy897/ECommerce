@@ -1,6 +1,9 @@
+const BACKEND_URL=import.meta.env['BACKEND_URL']
 
 export class handlers {
-  static async signup(email, pass, phone) {
+  static async signUp(details) {
+    
+    return {}
   }
 
   static async singIn(email, pass) {
@@ -9,7 +12,7 @@ export class handlers {
     let Code = 200;
     let msg = "";
     try {
-      const rawResponse = await fetch("http://127.0.0.1:8000/users/login/", {
+      const rawResponse = await fetch(BACKEND_URL+"/login/", {
 
         method: "Post",
         headers: {
