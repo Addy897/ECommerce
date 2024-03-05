@@ -5,7 +5,7 @@ import { loginStore } from '../stores/loginstore';
 export async function load({data}) {
     if(browser){
         if(data && data.user){
-            loginStore.set({isLogged:true,userName:data.user.fname})
+            loginStore.set({isLogged:true,userName:data.user.name})
         }
         else{
             loginStore.set({isLogged:false,userName:null})

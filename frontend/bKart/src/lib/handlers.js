@@ -1,9 +1,37 @@
-const BACKEND_URL=import.meta.env['BACKEND_URL']
-
+import {BACKEND_URL} from "$env/static/private"
 export class handlers {
+
   static async signUp(details) {
     
-    return {}
+    let user = null;
+    let Code = 200;
+    let msg = "";
+    try {
+      const rawResponse = await fetch(BACKEND_URL+"users/register/", {
+
+        method: "Post",
+        headers: {
+          'Accept': 'application/json',
+          'api-token': 'random',
+        },
+        body: JSON.stringify({
+          "email": details.email,
+          "password": details.password,
+          "name": details.name
+        })
+      });
+      user = await rawResponse.json();
+      console.log(user)
+    } catch (error) {
+      console.log("Error: ",error)
+      Code = 404;
+      msg = error;
+    }
+    if (Code !== 200 || !user) {
+      return ({ "Code": Code, "errorMessage": msg });
+    } else {
+      return ({ Code: Code, user: user.user })
+    }
   }
 
   static async singIn(email, pass) {
@@ -12,7 +40,7 @@ export class handlers {
     let Code = 200;
     let msg = "";
     try {
-      const rawResponse = await fetch(BACKEND_URL+"/login/", {
+      const rawResponse = await fetch(BACKEND_URL+"users/login/", {
 
         method: "Post",
         headers: {
@@ -40,7 +68,7 @@ export class handlers {
     let Code = 200;
     let msg = "";
     try {
-      const rawResponse = await fetch("http://127.0.0.1:8000/cart/add/", {
+      const rawResponse = await fetch(BACKEND_URL+"cart/add/", {
 
         method: "Post",
         headers: {
@@ -74,7 +102,7 @@ export class handlers {
     let Code = 200;
     let msg = "";
     try {
-      const rawResponse = await fetch("http://127.0.0.1:8000/cart/get/", {
+      const rawResponse = await fetch(BACKEND_URL+"cart/get/", {
 
         method: "Post",
         headers: {
@@ -109,7 +137,7 @@ export class handlers {
     let msg = "";
     try {
       cart = Buffer.from(cart).toString("base64")
-      const rawResponse = await fetch("http://127.0.0.1:8000/cart/save/", {
+      const rawResponse = await fetch(BACKEND_URL+"cart/save/", {
 
         method: "Post",
         headers: {

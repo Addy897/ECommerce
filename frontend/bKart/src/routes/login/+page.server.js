@@ -56,8 +56,7 @@ export const actions = {
                 if (password!==cpassword) {
                     return fail(400, { errormsg:"Passwords are not same", serror: true });
                 }
-                let user = await  handlers.signUp({email:email, password:password,name:name})
-
+                let user = await handlers.signUp({email:email, password:password,name:name})
                 if (!user.user || user.Code !== 200) {
                     if (user.errorMessage) {
                         return fail(400, { errormsg: user.errorMessage, serror: true });
@@ -82,5 +81,14 @@ export const actions = {
                     maxAge: 60 * 60*24*7}) 
         
             }
-            }
+            },
+    logout: async ({request ,cookies})=>{
+        cookies.delete("user",{ httpOnly: true,
+            sameSite: 'strict',
+            secure: false,
+            path: '/',
+            maxAge: 60 * 60*24*7}) 
+        throw redirect(301,"/login")
+        
+    }
 };

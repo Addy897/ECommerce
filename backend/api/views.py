@@ -21,11 +21,10 @@ def register(request:HttpRequest):
     if(request.method=="POST"):
         if(request.headers.get("api-token")==settings.API_TOKEN):
             data:dict=json.loads(request.body.decode())
-            if(not parseRegisterUser(data)):
-                return JsonResponse({"Error":True,"message":"Invalid Data"})
+           
             try:
                 passHash=make_password(data.get("password"))
-                user=EUsers(email=data.get("email"),fname=data.get("fname"),lname=data.get("lname"),password=passHash,pfPhoto=data.get("pfPhoto"),phone=data.get("phone"))
+                user=EUsers(email=data.get("email"),name=data.get("name"),password=passHash)
                 user.save()
             except IntegrityError as e:
                 return(JsonResponse({"Error":True,"message":str(e)}))
