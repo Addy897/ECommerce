@@ -3,13 +3,14 @@ import { handlers } from '../../lib/handlers'
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({locals}) {
-    if(locals && locals.user){
-        let cart=await handlers.getCart(locals.user.email)
-        return{user:locals.user,cart:cart.cart}
-    }
-    else{
+    if(!locals.user){
         throw redirect(301,'/login')
     }
+   
+        let cart=await handlers.getCart(locals.user.email)
+        return{user:locals.user,cart:cart.cart}
+    
+    
 }
 /** @type {import('./$types').Actions} */
 export const actions = {

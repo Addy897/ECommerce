@@ -1,66 +1,141 @@
-<script>
-	import { enhance } from "$app/forms";
-	import {loginStore} from "../stores/loginstore"
-	$: isVisible = false;
-	const showNav = () => {
-		isVisible = !isVisible;
-	};
-	let c1 =
-		'w-3/4 max-sm:pt-5 sm:w-[33%] sm:flex max-sm:fixed p-1  flex-row justify-evenly sm:pl-0 z-10 bg-orange-500 sm:bg-transparent left-[0px] top-0 sm:left-0 h-screen sm:h-auto text-xl duration-300 scale-x-1';
-	let c2 =
-		' w-3/4 sm:w-[33%] sm:flex max-sm:absolute p-1 flex-row justify-evenly z-10 left-[-500px] duration-300 scale-x-1 h-screen sm:h-auto top-0 text-xl ';
-	let keyword = '';
 
+<script>
+	import {loginStore} from "./../stores/loginstore"
+    $: isVisible = false;
+        const showNav = () => {
+        isVisible = !isVisible;
+    };
+	
+   
+    let navButtonClass =
+        "w-full sm:pl-0 cursor-pointer sm:w-auto max-sm:hover:text-black max-sm:hover:bg-white sm:hover:text-2xl lg:mx-3 px-2 shadow-md rounded-lg flex justify-center flex-row items-center text-center";
+    navButtonClass = "";
 </script>
 
-<header class="bg-blue-200 pb-4 font-mono">
-	<div
-		class="w-full pt-4 flex flex-col flex-wrap justify-between sm:flex-row sm:justify-between sm:items-center sm:flex-wrap"
-	>
-		<button class="sm:hidden pl-[90%]" on:click={showNav}
-			><i class={!isVisible ? 'fa fa-bars' : 'fa fa-xmark'}></i></button
-		>
-		<div class="flex flex-row justify-center sm:justify-start items-center flex-wrap">
-			<div
-				class="max-sm:w-full sm:w-1/2 text-2xl flex flex-row justify-evenly font-mono lg:text-4xl tracking-wider"
-			>
-				Navbar
-			</div>
-			<div
-				class="sm:w-[33%] h-8 my-0 font-mono text-lg flex flex-row flex-nowrap text-black sm:text-xl tracking-wider"
-			>
-				<form method="post" class="flex flex-row" action="/">
-					<input
-						class="focus:outline-none pl-2 w-auto rounded-lg"
-						name="keyword"
-						bind:value={keyword}
-						type="text"
-					/><button type="submit" class="ml-1.5 pt-1.5 fa fa-magnifying-glass"></button>
-				</form>
-			</div>
-		</div>
+<nav class="bg-white p-4 border-b-2">
+    <div class="container mx-auto flex justify-between items-center flex-wrap gap-5">
+        <div>
+            <a href="?" class="text-black text-xl font-bold"
+                >ECommerce</a
+            >
+        </div>
+        <div class="md:hidden">
+            <!-- Hamburger -->
+            <button
+                id="mobile-menu-button"
+                class="text-black focus:outline-none"
+                on:click={showNav}
+            >
+                <i class={!isVisible ? "fa fa-bars" : "fa fa-xmark"}></i>
+            </button>
+        </div>
+        <form method="post" class="flex flex-row" action="/">
+            <div class="relative">
+                <input
+                    type="text"
+                    placeholder="Search"
+                    class="bg-[#FEFFAC] font-mono text-black border-2 shadow-md rounded-xl px-6 py-1 focus:outline-none text-center w-full"
+                />
+                <button
+                    class="absolute left-0 top-0 z-3 mt-3 ml-4 focus:outline-none fa fa-magnifying-glass"
+                >
+                </button>
+            </div>
+        </form>
+        <div class="hidden md:flex flex-row text-xl font-sans gap-5">
+            <a
+                href="/"                    
+                class="text-black border-solid hover:bg-blue-300 block px-3 py-2 rounded-lg font-medium"
+                >Home</a
+            >
+            <a
+                href="/about"   
+                class="text-black border-solid  hover:bg-blue-300 block px-3 py-2 rounded-lg font-medium"
+                >About</a
+            >
+            {#if $loginStore.isLogged}
+                <a
+					href="/dashboard"
+                    class="text-black border-solid  hover:bg-blue-300 block px-3 py-2 rounded-lg font-medium"
+                    >{$loginStore.userName}</a
+                >
+                
+                <div class="text-black block px-3 py-2 rounded-md">
+                    <img
+                        class="rounded-full h-7 w-7"
+                        src={"/images/Menu4.png"}
+                        alt=""
+                        referrerpolicy="no-referrer"
+                    />
+                </div>
+            {:else}
+                <a 
+					href="/login"
+                    class="text-black  hover:bg-blue-300 block px-3 py-2 rounded-lg font-medium"
+                    >Login</a
+                >
+            {/if}
+        </div>
+    </div>
+</nav>
 
-		<div class={isVisible ? c1 : c2}>
-			<a
-				class="w-full flex justify-center items-center sm:pl-0 cursor-pointer sm:w-auto max-sm:hover:text-black max-sm:hover:bg-white sm:hover:text-2xl hover:no-underline"
-				href="/" on:click={showNav}>Home</a
-			><br />
-			<a
-				class="w-full flex justify-center items-center sm:pl-0 cursor-pointer sm:w-auto max-sm:hover:text-black max-sm:hover:bg-white sm:hover:text-2xl hover:no-underline"
-				href="/about" on:click={showNav}>About</a
-			><br />
-			{#if $loginStore.isLogged}
-				
-			<a
-				class="flex flex-row  justify-center sm:items-center sm:justify-center w-full  sm:pl-0 cursor-pointer sm:w-auto max-sm:hover:text-black max-sm:hover:bg-white sm:hover:text-2xl hover:no-underline"
-				href="/dashboard" on:click={showNav}><img class="rounded-full h-7 w-7" src={"/images/Menu4.png"} alt='' referrerpolicy="no-referrer"/>&nbsp;{$loginStore.userName}</a
-				>
-			{:else}
-			<a
-				class="flex flex-row justify-center w-full sm:pl-0 cursor-pointer sm:w-auto max-sm:hover:text-black max-sm:hover:bg-white sm:hover:text-2xl hover:no-underline"
-				href="/login" on:click={showNav}>Login</a
-			>
-			{/if}
-		</div>
-	</div>
-</header>
+<!-- Mobile Menu -->
+<div
+    class="md:hidden bg-white absolute left-0 top-0 h-full w-48 z-50 {!isVisible
+        ? 'hidden'
+        : ''}"
+>
+    <div
+        class="flex flex-col justify-center items-center px-2 pt-2 pb-3 space-y-1 gap-5"
+    >
+        <a href="?" class="py-2 px-3 border-b-2 w-full flex justify-center text-black"
+            >ECommerce</a
+        >
+
+        <button
+            on:click={() => {
+                
+                  location.href="/"
+
+            }}
+            class="text-black hover:bg-blue-300 block px-3 py-2 rounded-md font-medium"
+            >Home</button
+        >
+        <button
+            on:click={() => {
+               location.href="/about"
+               
+            }}
+            class="text-black hover:bg-blue-300 block px-3 py-2 rounded-md font-medium"
+            data-sveltekit-preload-data="hover"
+            >about</button
+        >
+        {#if $loginStore.isLogged}
+            <a
+                href="/dashboard"
+                on:click={()=>{isVisible=false}} 
+                
+                class="text-black hover:bg-blue-300 block px-3 py-2 rounded-md font-medium"
+               
+                >{$loginStore.userName}</a
+            >
+            <div class="text-black block px-3 py-2 rounded-md">
+                <img
+                    class="rounded-full h-7 w-7"
+                    src={"/images/Menu4.png"}
+                    alt=""
+                    referrerpolicy="no-referrer"
+                />
+            </div>
+        {:else}
+            <button
+                on:click={() => {
+                    location.href="/login"
+                }}
+                class="text-black hover:bg-blue-300 block px-3 py-2 rounded-md font-medium"
+                >Login</button
+            >
+        {/if}
+    </div>
+</div>
+
