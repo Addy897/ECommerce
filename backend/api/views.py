@@ -74,6 +74,7 @@ def product_get(request:HttpRequest):
                 if(len((products))):
                     
                     response=products[0].toJson()
+                    
                 else:
                     response={"Error":"NO PRODUCT"}
                 return JsonResponse({"response":b64encode(json.dumps(response).encode()).decode()})
@@ -200,7 +201,7 @@ def cart_save(request:HttpRequest):
 def item_get(request:HttpRequest):
     if(request.method=="POST"):
         if(request.headers.get("api-token")==settings.API_TOKEN):
-            limit=request.headers.get("limit",10)
+            limit=request.headers.get("limit",18)
             keyword=request.headers.get("keyword",None)
             
             if(keyword):

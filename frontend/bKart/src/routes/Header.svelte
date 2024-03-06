@@ -34,6 +34,7 @@
                 <input
                     type="text"
                     placeholder="Search"
+                    name="keyword"
                     class="bg-[#FEFFAC] font-mono text-black border-2 shadow-md rounded-xl px-6 py-1 focus:outline-none text-center w-full"
                 />
                 <button
