@@ -64,7 +64,7 @@
                 <div class="text-black block px-3 py-2 rounded-md">
                     <img
                         class="rounded-full h-7 w-7"
-                        src={"/images/Menu4.png"}
+                        src={"https://cdn-icons-png.flaticon.com/128/3177/3177440.png"}
                         alt=""
                         referrerpolicy="no-referrer"
                     />
@@ -123,7 +123,7 @@
             <div class="text-black block px-3 py-2 rounded-md">
                 <img
                     class="rounded-full h-7 w-7"
-                    src={"/images/Menu4.png"}
+                    src={"https://cdn-icons-png.flaticon.com/128/3177/3177440.png"}
                     alt=""
                     referrerpolicy="no-referrer"
                 />
